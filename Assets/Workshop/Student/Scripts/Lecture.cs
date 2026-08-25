@@ -1,15 +1,31 @@
+using Mono.Cecil.Cil;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
+using Unity.VisualScripting;
+using UnityEditor.SceneManagement;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace Assignment
 {
     public class Lecture : MonoBehaviour
     {
+        private InputAction nextStageAction;
+        private InputAction prevStageAction;
+        private InputAction startStageAction;
+        private string stageName;
+        private int stage;
 
         void Start()
         {
+            stage = 0;
+            ChangeStage();
+
+            nextStageAction = InputSystem.actions.FindAction("NextStage");
+            prevStageAction = InputSystem.actions.FindAction("PreviousStage");
+            startStageAction = InputSystem.actions.FindAction("StartStage");
+
             // LCT01_SyntaxArray();
             // LCT02_ArrayInitialize();
             // LCT03_SyntaxLoop();
@@ -19,16 +35,112 @@ namespace Assignment
             // LCT07_SyntaxNestedLoop();
         }
 
-        #region Lecture
+        void Update()
+        {
+            if (nextStageAction.WasReleasedThisFrame() && stage < 6)
+            {
+                stage++;
+                stage %= 7;
+                ChangeStage();
+            }
+
+            if (prevStageAction.WasReleasedThisFrame() && stage > 0)
+            {
+                stage--;
+                stage %= 7;
+                ChangeStage();
+            }
+
+            if (startStageAction.WasReleasedThisFrame())
+            {
+                StartStage();
+            }
+        }
+
+        void ChangeStage()
+        {
+            switch (stage)
+            {
+                case 0:
+                    stageName = "SyntaxArray";
+                    break;
+                case 1:
+                    stageName = "ArrayInitialize";
+                    break;
+                case 2:
+                    stageName = "SyntaxLoop";
+                    break;
+                case 3:
+                    stageName = "LoopAndArray";
+                    break;
+                case 4:
+                    stageName = "Syntax2DArray";
+                    break;
+                case 5:
+                    stageName = "SizeOf2DArray";
+                    break;
+                case 6:
+                    stageName = "SyntaxNestedLoop";
+                    break;
+            }
+            Debug.Log($"Stage : {stage + 1}, {stageName}" + "\nPress Spacebar to start. Press N to go to next stage. Press B to go to previous stage.");
+        }
+        void StartStage()
+        {
+            switch (stage)
+            {
+                case 0:
+                    LCT01_SyntaxArray();
+                    break;
+                case 1:
+                    LCT02_ArrayInitialize();
+                    break;
+                case 2:
+                    LCT03_SyntaxLoop();
+                    break;
+                case 3:
+                    LCT04_LoopAndArray();
+                    break;
+                case 4:
+                    LCT05_Syntax2DArray();
+                    break;
+                case 5:
+                    LCT06_SizeOf2DArray();
+                    break;
+                case 6:
+                    LCT07_SyntaxNestedLoop();
+                    break;
+            }
+        }
 
         public void LCT01_SyntaxArray()
         {
-            throw new System.NotImplementedException();
+            string[] ironManSuit = new string[2];
+            ironManSuit[0] = "Mark I";
+            ironManSuit[1] = "Mark II";
+            string tonyStarkWear = ironManSuit[0];
+            Debug.Log($"Tony Stark wear {tonyStarkWear}");
+            Debug.Log($"Size : {tonyStarkWear.Length}");
         }
 
+        public int lct02_spiderSuitNum = 0;
+        public int lct02_batSuitNum = 0;
         public void LCT02_ArrayInitialize()
         {
-            throw new System.NotImplementedException();
+
+            string[] spiderManSuit = new string[] {
+                "Classic",
+                "Black Suit",
+                "Iron Spider"
+            };
+
+            string[] batManSuit = new string[] {
+                "Classic",
+                "White Bat",
+            };
+
+            Debug.Log($"Spiderman wear {spiderManSuit[lct02_spiderSuitNum]}");
+            Debug.Log($"Batman wear {batManSuit[lct02_batSuitNum]}");
         }
 
         /*
@@ -47,7 +159,18 @@ namespace Assignment
          */
         public void LCT03_SyntaxLoop()
         {
-            throw new System.NotImplementedException();
+            int i;
+            for (i = 0; i < 10; i++)
+            {
+                Debug.Log($" i less than 10, i : {i}");
+            }
+
+            Debug.Log("======================");
+
+            for (i = 1; i <= 10; i++)
+            {
+                Debug.Log($" i less than or equal with 10, i : {i}");
+            }
         }
 
         /*
@@ -79,7 +202,29 @@ namespace Assignment
         public string[] lct04_ironManSuitNames;
         public void LCT04_LoopAndArray()
         {
-            throw new System.NotImplementedException();
+            // lct04_ironManSuitNames = new string[] {
+            //     "Mark I",
+            //     "Mark II",
+            //     "Mark III",
+            //     "Mark IV",
+            //     "Mark V",
+            //     "Mark VI",
+            //     "Mark VII",
+            //     "Mark VIII",
+            // };
+
+            int i;
+            Debug.Log("====== Log by One incrementer ======");
+            for (i = 0; i < lct04_ironManSuitNames.Length; i++)
+            {
+                Debug.Log($"IronManSuitNames : {lct04_ironManSuitNames[i]}");
+            }
+
+            Debug.Log("====== Log by Two incrementer ======");
+            for (i = 0; i < lct04_ironManSuitNames.Length; i += 2)
+            {
+                Debug.Log($"IronManSuitNames : {lct04_ironManSuitNames[i]}");
+            }
         }
 
         /*
@@ -112,9 +257,25 @@ namespace Assignment
          * ถ้าจะประกาศตัวแปร 2D array ขนาด 3 แถว x 5 หลัก สามารถเขียน code ได้ดังนี้
          * int[,] my2DArray = new int[3, 5];
          */
+        public int[,] lct05_my2DArray = new int[3, 3];
         public void LCT05_Syntax2DArray()
         {
-            throw new System.NotImplementedException();
+            lct05_my2DArray = new int[,]{
+                {1,2,3},
+                {4,5,6},
+                {7,8,9}
+            };
+            Debug.Log($"{lct05_my2DArray[0, 1]}");
+            Debug.Log($"{lct05_my2DArray.GetLength(0)}");
+            Debug.Log($"{lct05_my2DArray.GetLength(1)}");
+
+            for (int r = 0; r < lct05_my2DArray.GetLength(0); r++)
+            {
+                for (int c = 0; c < lct05_my2DArray.GetLength(1); c++)
+                {
+                    Debug.Log(lct05_my2DArray[r, c]);
+                }
+            }
         }
 
         /*
@@ -153,6 +314,18 @@ namespace Assignment
         public void LCT06_SizeOf2DArray()
         {
             int[,] my2DArray = lct06_my2DArray.Get2DArray();
+
+            Debug.Log($"Rows : {lct06_my2DArray.rows}");
+            Debug.Log($"Cols : {lct06_my2DArray.cols}");
+
+            for (int r = 0; r < my2DArray.GetLength(0); r++)
+            {
+                for (int c = 0; c < my2DArray.GetLength(1); c++)
+                {
+                    Debug.Log(my2DArray[r, c]);
+                }
+            }
+
         }
 
         /*
@@ -234,10 +407,18 @@ namespace Assignment
         public int lct07_rows;
         public void LCT07_SyntaxNestedLoop()
         {
-            throw new System.NotImplementedException();
+            int[,] my2DArray = lct06_my2DArray.Get2DArray();
+
+            for (int r = 0; r < lct07_rows; r++)
+            {
+                for (int c = 0; c < lct07_columns; c++)
+                {
+                    Debug.Log(my2DArray[r, c]);
+                }
+            }
         }
 
-        #endregion
+
 
         private void PrintBoard(string[,] board)
         {
