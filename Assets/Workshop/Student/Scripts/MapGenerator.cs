@@ -30,12 +30,12 @@ namespace Workshop.Student
             GameObject player = Instantiate(players[playerIndex], new Vector3(0, 0), Quaternion.identity);
 
             // 2. create obstacles
-            for (int y = 1; y < rows - 1; y++)
+            for (int y = 0; y < rows / 2; y++)
             {
-                for (int x = 1; x < columns - 1; x++)
+                for (int x = columns / 2; x < columns / 2 + 1; x++)
                 {
                     int r = UnityEngine.Random.Range(0, wallTiles.Length);
-                    GameObject obstacle = Instantiate(wallTiles[r], new Vector3(x, y), Quaternion.identity);
+                    GameObject obstacle = Instantiate(wallTiles[r], new Vector3(x, y, -0.05f), Quaternion.identity);
                     obstacle.name = $"Obstacle({x},{y})";
                     obstaclePos.Add(obstacle.transform.position);
                 }

@@ -3,14 +3,27 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace Assignment
 {
     public class Assignment : MonoBehaviour
     {
+        private InputAction nextStageAction;
+        private InputAction prevStageAction;
+        private InputAction startStageAction;
+        private string stageName;
+        private int stage;
         public void Start()
         {
-            AS01_RandomItemDrop();
+            stage = 0;
+            ChangeStage();
+
+            nextStageAction = InputSystem.actions.FindAction("NextStage");
+            prevStageAction = InputSystem.actions.FindAction("PreviousStage");
+            startStageAction = InputSystem.actions.FindAction("StartStage");
+
+            // AS01_RandomItemDrop();
             // AS02_NestedLoopForCreate2DMap();
             // AS03_NestedLoopForMakingWallAround();
             // AS04_AttackEnemy();
@@ -30,6 +43,144 @@ namespace Assignment
 
         }
 
+        void Update()
+        {
+            if (nextStageAction.WasReleasedThisFrame() && stage < 6)
+            {
+                stage++;
+                stage %= 17;
+                ChangeStage();
+            }
+
+            if (prevStageAction.WasReleasedThisFrame() && stage > 0)
+            {
+                stage--;
+                stage %= 17;
+                ChangeStage();
+            }
+
+            if (startStageAction.WasReleasedThisFrame())
+            {
+                StartStage();
+            }
+        }
+
+        void ChangeStage()
+        {
+            switch (stage)
+            {
+                case 0:
+                    stageName = "RandomItemDrop";
+                    break;
+                case 1:
+                    stageName = "NestedLoopForCreate2DMap";
+                    break;
+                case 2:
+                    stageName = "NestedLoopForMakingWallAround";
+                    break;
+                case 3:
+                    stageName = "AttackEnemy";
+                    break;
+                case 4:
+                    stageName = "DynamicIterationLoop";
+                    break;
+                case 5:
+                    stageName = "WhileLoopAndArray";
+                    break;
+                case 6:
+                    stageName = "HealTargetAtIndex";
+                    break;
+                case 7:
+                    stageName = "RandomPickingDialogue";
+                    break;
+                case 8:
+                    stageName = "MultiplicationTable";
+                    break;
+                case 9:
+                    stageName = "FindSummationFromZeroToNUsingWhileLoop";
+                    break;
+                case 10:
+                    stageName = "SpawnEnemies";
+                    break;
+                case 11:
+                    stageName = "CountTime";
+                    break;
+                case 12:
+                    stageName = "SumOfNumbersInRow";
+                    break;
+                case 13:
+                    stageName = "SumOfNumbersInColumn";
+                    break;
+                case 14:
+                    stageName = "MakeTheTriangle";
+                    break;
+                case 15:
+                    stageName = "MultiplicationTableOf_2_3_and_4";
+                    break;
+                case 16:
+                    stageName = "EX_01_TicTacToeGame_TurnPlay";
+                    break;
+            }
+            Debug.Log($"Stage : {stage + 1}, {stageName}" + "\nPress Spacebar to start. Press N to go to next stage. Press B to go to previous stage.");
+        }
+        void StartStage()
+        {
+            switch (stage)
+            {
+                case 0:
+                    AS01_RandomItemDrop();
+                    break;
+                case 1:
+                    AS02_NestedLoopForCreate2DMap();
+                    break;
+                case 2:
+                    AS03_NestedLoopForMakingWallAround();
+                    break;
+                case 3:
+                    AS04_AttackEnemy();
+                    break;
+                case 4:
+                    AS05_DynamicIterationLoop();
+                    break;
+                case 5:
+                    AS06_WhileLoopAndArray();
+                    break;
+                case 6:
+                    AS07_HealTargetAtIndex();
+                    break;
+                case 7:
+                    AS08_RandomPickingDialogue();
+                    break;
+                case 8:
+                    AS09_MultiplicationTable();
+                    break;
+                case 9:
+                    AS10_FindSummationFromZeroToNUsingWhileLoop();
+                    break;
+                case 10:
+                    AS11_SpawnEnemies();
+                    break;
+                case 11:
+                    StartCoroutine(AS12_CountTime());
+                    break;
+                case 12:
+                    AS13_SumOfNumbersInRow();
+                    break;
+                case 13:
+                    AS14_SumOfNumbersInColumn();
+                    break;
+                case 14:
+                    AS15_MakeTheTriangle();
+                    break;
+                case 15:
+                    AS16_MultiplicationTableOf_2_3_and_4();
+                    break;
+                case 16:
+                    EX_01_TicTacToeGame_TurnPlay();
+                    break;
+            }
+        }
+
         #region Assignment
 
         /*
@@ -46,7 +197,16 @@ namespace Assignment
         public GameObject[] as01_items;
         public void AS01_RandomItemDrop()
         {
-            throw new NotImplementedException();
+            StartCoroutine(RandomItem());
+        }
+
+        IEnumerator RandomItem()
+        {
+            int itemIndex = UnityEngine.Random.Range(0, as01_items.Length);
+            GameObject item = Instantiate(as01_items[itemIndex], new Vector3(0, 0), Quaternion.identity);
+            Debug.Log($"Got item: {item.name}");
+            yield return new WaitForSeconds(2f);
+            Destroy(item);
         }
 
         /*
