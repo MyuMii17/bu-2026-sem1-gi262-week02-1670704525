@@ -349,6 +349,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   columns: 10
   rows: 10
+  Players:
+  - {fileID: 7365724651264261338, guid: 40fd79106f0cd4d4aa499f41401cb239, type: 3}
+  - {fileID: 7365724651264261338, guid: d2eb63f9d25c4604991ad4465a88ba27, type: 3}
+  exitPrefeb: {fileID: 7025940495585331075, guid: 66e92acc836da4f41bdc3eb615f7c97b, type: 3}
   floorTiles:
   - {fileID: 8981274605333006497, guid: 93d0b3edf258c194ca8e4bdaedb3507d, type: 3}
   - {fileID: 5525326628935868067, guid: 42ae0a1037f220c46be78186c07b001e, type: 3}
