@@ -173,15 +173,15 @@ MonoBehaviour:
   - {fileID: 4018252664251982846, guid: 0603b002125343345830af079f75689f, type: 3}
   - {fileID: 6338718052967692477, guid: 4344d40571f47834fb66e2019c9b3176, type: 3}
   - {fileID: 6447585732716477075, guid: fc041445e99b67f4398f47be2d0833ad, type: 3}
-  as02_columns: 3
-  as02_rows: 3
+  as02_columns: 5
+  as02_rows: 5
   as03_wall: {fileID: 5291166318002269242, guid: 413c1aa8e8dffdd448102fbcf99aaf6d, type: 3}
   as03_columns: 5
   as03_rows: 5
   as04_enemyHP: 0a000000140000001e000000
   as04_damage: 5
   as04_target: 2
-  as05_n: 3
+  as05_n: 5
   as06_ironManSuitNames:
   - Mark I
   - Mark II
@@ -199,7 +199,7 @@ MonoBehaviour:
   - "\u0E2A\u0E27\u0E31\u0E2A\u0E14\u0E35"
   as09_n: 2
   as10_n: 15
-  as11_enemyHPs: 0f0000001400000019000000
+  as11_enemyHPs: 0f00000014000000190000001e000000
   as11_enemyPrefab: {fileID: 8402306337599026408, guid: 750804a3353a1434ab71f408a13e1b58, type: 3}
   as12_countTime: 5
   as13_matrix:
