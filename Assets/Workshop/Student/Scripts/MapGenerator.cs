@@ -104,7 +104,7 @@ namespace Workshop.Student
                         }
                         if (foodIndex > -1)
                         {
-                            Instantiate(foodTiles[foodIndex], new Vector2(x, y), Quaternion.identity);
+                            Instantiate(foodTiles[foodIndex], new Vector3(x, y), Quaternion.identity);
                         }
                     }
                 }
